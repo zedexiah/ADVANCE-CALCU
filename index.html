@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Scientific Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+        .dark-mode #loading-screen {
+            background-color: #333;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div id="loading-screen">
+        <div class="loader"></div>
+    </div>
+    <div id="calculator">
+        <div class="calculator-content">
+            <input type="text" id="display" readonly>
+            <div id="history"></div>
+            <div class="buttons">
+                <!-- Original buttons -->
+                <button class="fn" data-tooltip="Sine">sin</button>
+                <button class="fn" data-tooltip="Cosine">cos</button>
+                <button class="fn" data-tooltip="Tangent">tan</button>
+                <button class="fn" data-tooltip="Logarithm base 10">log</button>
+                <button class="fn" data-tooltip="Natural logarithm">ln</button>
+                <button class="fn" data-tooltip="Square root">√</button>
+                <button class="fn" data-tooltip="Square">x²</button>
+                <button class="fn" data-tooltip="Cube">x³</button>
+                <button class="fn" data-tooltip="Power">xʸ</button>
+                <button class="fn" data-tooltip="Pi">π</button>
+                <button class="op" data-tooltip="Memory Clear">MC</button>
+                <button class="op" data-tooltip="Memory Recall">MR</button>
+                <button class="op" data-tooltip="Memory Add">M+</button>
+                <button class="op" data-tooltip="Memory Subtract">M-</button>
+                <button class="op" data-tooltip="Clear">C</button>
+                <button class="op" data-tooltip="Open Parenthesis">(</button>
+                <button class="op" data-tooltip="Close Parenthesis">)</button>
+                <button class="op" data-tooltip="Percentage">%</button>
+                <button class="op" data-tooltip="Change Sign">±</button>
+                <button class="op" data-tooltip="Divide">÷</button>
+                <button>7</button>
+                <button>8</button>
+                <button>9</button>
+                <button class="op" data-tooltip="Multiply">×</button>
+                <button class="fn" data-tooltip="Euler's number">e</button>
+                <button>4</button>
+                <button>5</button>
+                <button>6</button>
+                <button class="op" data-tooltip="Subtract">-</button>
+                <button class="op" data-tooltip="Delete">DEL</button>
+                <button>1</button>
+                <button>2</button>
+                <button>3</button>
+                <button class="op" data-tooltip="Add">+</button>
+                <button class="op result" data-tooltip="Calculate">=</button>
+                <button class="wide">0</button>
+                <button>.</button>
+            </div>
+            <div class="advanced-features">
+                <button class="fn" data-tooltip="Unit Conversion">Unit</button>
+                <button class="fn" data-tooltip="Graph Function">Graph</button>
+                <button class="fn" data-tooltip="Save Calculation">Save</button>
+                <button class="fn" data-tooltip="Recall Calculation">Recall</button>
+            </div>
+            <button id="themeToggle">Toggle Theme</button>
+        </div>
+    </div>
+    <!-- Add this just before the closing </body> tag -->
+    <div id="unitConversion" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Unit Conversion</h2>
+            <div class="conversion-container">
+                <div class="conversion-input">
+                    <select id="conversionType">
+                        <option value="length">Length</option>
+                        <option value="weight">Weight</option>
+                        <option value="temperature">Temperature</option>
+                    </select>
+                    <input type="number" id="fromValue" placeholder="Enter value">
+                    <select id="fromUnit"></select>
+                </div>
+                <div class="conversion-arrow">➜</div>
+                <div class="conversion-output">
+                    <select id="toUnit"></select>
+                    <div id="conversionResult"></div>
+                </div>
+            </div>
+            <button id="convertBtn" class="modal-button">Convert</button>
+        </div>
+    </div>
+    <div id="graphModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Graph Function</h2>
+            <div class="graph-input">
+                <input type="text" id="functionInput" placeholder="Enter function (e.g., x^2)">
+                <button id="plotBtn" class="modal-button">Plot</button>
+            </div>
+            <div id="graphContainer"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
